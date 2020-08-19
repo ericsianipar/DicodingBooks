@@ -97,6 +97,9 @@ function main() {
             })
     };
 
+    /*
+    // Menggunakan metode XHR
+
     const updateBook = (book) => {
         // Membuat instance dari XMLHttpRequest
         const xhr = new XMLHttpRequest();
@@ -121,6 +124,28 @@ function main() {
 
         // Mengirimkan request dan menyisipkan JSON.stringify(book) pada body
         xhr.send(JSON.stringify(book));
+    };
+    */
+
+    const updateBook = (book) => {
+        fetch(`${baseUrl}/edit/${book.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Auth-Token": "12345"
+            },
+            body: JSON.stringify(book)
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(responseJson => {
+                showResponseMessage(responseJson.message);
+                getBook();
+            })
+            .catch(error => {
+                showResponseMessage(error);
+            })
     };
 
     const removeBook = (bookId) => {
