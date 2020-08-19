@@ -2,6 +2,9 @@ function main() {
 
     const baseUrl = "https://web-server-book-dicoding.appspot.com";
 
+    /*
+    // Metode XHR
+
     const getBook = () => {
         // membuat instance dari XMLHttpRequest
         const xhr = new XMLHttpRequest();
@@ -25,6 +28,24 @@ function main() {
         // Mengirimkan request
         xhr.send();
     };
+    */
+
+    const getBook = () => {
+        fetch(`${baseUrl}/list`)
+            .then(response => {
+                return response.json();
+            })
+            .then(responseJson => {
+                if (responseJson.error) {
+                    showResponseMessage(responseJson.message);
+                } else {
+                    renderAllBooks(responseJson.books);
+                }
+            })
+            .catch(error => {
+                showResponseMessage(error);
+            })
+    }
 
     const insertBook = (book) => {
         // Membuat instance dari XMLHttpRequest
