@@ -3,7 +3,7 @@ function main() {
     const baseUrl = "https://web-server-book-dicoding.appspot.com";
 
     /*
-    // Metode XHR
+    // Menggunakan metode XHR
 
     const getBook = () => {
         // membuat instance dari XMLHttpRequest
@@ -46,6 +46,8 @@ function main() {
                 showResponseMessage(error);
             })
     }
+    /*
+    // Menggunakan metode XHR
 
     const insertBook = (book) => {
         // Membuat instance dari XMLHttpRequest
@@ -71,6 +73,28 @@ function main() {
 
         // Mengirimkan request dan menyisipkan JSON.stringify(book) pada body
         xhr.send(JSON.stringify(book));
+    };
+    */
+
+    const insertBook = (book) => {
+        fetch(`${baseUrl}/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Auth-Token": "12345"
+            },
+            body: JSON.stringify(book)
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(responseJson => {
+                showResponseMessage(responseJson.message);
+                getBook();
+            })
+            .catch(error => {
+                showResponseMessage(error);
+            })
     };
 
     const updateBook = (book) => {
